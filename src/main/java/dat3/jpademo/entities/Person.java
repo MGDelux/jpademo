@@ -6,10 +6,13 @@
 package dat3.jpademo.entities;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,6 +27,8 @@ public class Person implements Serializable {
     private Long p_id;
     private String name;
     private int year;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address adress;
 
     public Person() {
     }
@@ -32,6 +37,19 @@ public class Person implements Serializable {
         this.p_id = p_id;
         this.name = name;
         this.year = year;
+    }
+
+    public Address getAdress() {
+        //H.D.J
+        return adress;
+    }
+
+    public void setAdress(Address adress) {
+        this.adress = adress;
+        if(adress != null){
+            adress.setPerson(this);
+          
+        }
     }
 
  
@@ -62,8 +80,10 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "p_id=" + p_id + ", name=" + name + ", year=" + year + '}';
+        return "Person{" + "p_id=" + p_id + ", name=" + name + ", year=" + year + ", adress=" + adress + '}';
     }
+
+   
 
     
 }
